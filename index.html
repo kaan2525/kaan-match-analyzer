@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#08111f">
+<title>Kaan Match Analyzer</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+    margin:0;
+    background:#08111f;
+    color:#f5f7fa;
+    font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display",Arial,sans-serif;
+}
+
+.app{
+    max-width:720px;
+    margin:auto;
+    padding:20px 15px 40px;
+}
+
+.header{
+    padding:10px 3px 20px;
+}
+
+.small{
+    color:#8292a8;
+    font-size:12px;
+    letter-spacing:1.5px;
+}
+
+h1{
+    margin:5px 0;
+    font-size:30px;
+}
+
+.subtitle{
+    color:#9ba9bb;
+    font-size:14px;
+}
+
+.card{
+    background:#101b2c;
+    border:1px solid #22334b;
+    border-radius:18px;
+    padding:16px;
+    margin-top:13px;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:11px;
+}
+
+label{
+    display:block;
+    color:#9baabd;
+    font-size:12px;
+    margin-bottom:6px;
+}
+
+input,select{
+    width:100%;
+    padding:12px;
+    border-radius:11px;
+    border:1px solid #2a3d58;
+    background:#091422;
+    color:white;
+    font-size:16px;
+}
+
+button{
+    border:0;
+    border-radius:12px;
+    padding:13px 16px;
+    font-weight:800;
+    font-size:15px;
+    cursor:pointer;
+}
+
+.primary{
+    background:#dceaff;
+    color:#07111e;
+}
+
+.secondary{
+    background:#19283c;
+    color:#edf3fa;
+    border:1px solid #2c405c;
+}
+
+.full{
+    grid-column:1/-1;
+}
+
+.actions{
+    display:flex;
+    gap:9px;
+    margin-top:14px;
+}
+
+.actions button{
+    flex:1;
+}
+
+.marketGrid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:9px;
+    margin-top:14px;
+}
+
+.market{
+    background:#0a1524;
+    border:1px solid #253750;
+    border-radius:13px;
+    padding:12px;
+}
+
+.marketTitle{
+    color:#91a1b5;
+    font-size:12px;
+}
+
+.marketValue{
+    font-size:21px;
+    font-weight:900;
+    margin-top:4px;
+}
+
+.good{
+    border-color:#5c779b;
+}
+
+.note{
+    color:#8999ad;
+    font-size:12px;
+    line-height:1.5;
+}
+
+.resultTitle{
+    font-size:20px;
+    font-weight:900;
+}
+
+.pick{
+    margin-top:14px;
+    padding:13px;
+    border-radius:13px;
+    background:#17273b;
+    border:1px solid #304761;
+}
+
+.couponRow{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+    padding:12px 0;
+    border-bottom:1px solid #24354c;
+}
+
+.couponRow:last-child{
+    border-bottom:0;
+}
+
+@media(max-width:520px){
+    .grid{
+        grid-template-columns:1fr;
+    }
+
+    .marketGrid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .full{
+        grid-column:auto;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<div class="header">
+    <div class="small">PERSONAL FOOTBALL ANALYZER</div>
+    <h1>Kaan Match Analyzer ⚽</h1>
+    <div class="subtitle">
+        Kupon yapmadan önce maç verilerini düzenli şekilde karşılaştır.
+    </div>
+</div>
+
+<div class="card">
+
+<div class="grid">
+
+<div>
+<label>Ev sahibi</label>
+<input id="home" placeholder="Galatasaray">
+</div>
+
+<div>
+<label>Deplasman</label>
+<input id="away" placeholder="Fenerbahçe">
+</div>
+
+<div>
+<label>Ev sahibi attığı gol ort.</label>
+<input id="homeGF" type="number" min="0" step="0.1" value="1.6">
+</div>
+
+<div>
+<label>Deplasman attığı gol ort.</label>
+<input id="awayGF" type="number" min="0" step="0.1" value="1.3">
+</div>
+
+<div>
+<label>Ev sahibi yediği gol ort.</label>
+<input id="homeGA" type="number" min="0" step="0.1" value="1.0">
+</div>
+
+<div>
+<label>Deplasman yediği gol ort.</label>
+<input id="awayGA" type="number" min="0" step="0.1" value="1.2">
+</div>
+
+<div>
+<label>Ev sahibinin son 5 maç puanı</label>
+<input id="homeForm" placeholder="10">
+</div>
+
+<div>
+<label>Deplasmanın son 5 maç puanı</label>
+<input id="awayForm" placeholder="7">
+</div>
+
+<div class="full">
+<label>Analiz tipi</label>
+<select id="mode">
+<option value="normal">Dengeli analiz</option>
+<option value="goals">Gol ağırlıklı</option>
+<option value="safe">Temkinli analiz</option>
+</select>
+</div>
+
+</div>
+
+<div class="actions">
+<button class="primary" onclick="analyze()">MAÇI ANALİZ ET 🔎</button>
+<button class="secondary" onclick="clearAll()">TEMİZLE</button>
+</div>
+
+</div>
+
+
+<div class="card" id="result">
+
+<div class="note">
+Henüz maç analizi yapılmadı.
+</div>
+
+</div>
+
+
+<div class="card">
+
+<div class="resultTitle">🧾 Kupon Taslağı</div>
+
+<div id="coupon">
+
+<div class="note" style="margin-top:8px">
+Henüz kupona maç eklenmedi.
+</div>
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<div class="resultTitle">ℹ️ Önemli</div>
+
+<div class="note" style="margin-top:8px">
+Bu uygulama kesin sonuç veya garanti kazanç üretmez.
+Model, girilen istatistiklerden yaklaşık olasılıklar üretir.
+Canlı veri bağlantısı sonraki sürümde eklenecek.
+</div>
+
+</div>
+
+</div>
+
+
+<script>
+
+let coupon=[];
+
+function num(id){
+    return Math.max(0,Number(document.getElementById(id).value)||0);
+}
+
+function clamp(x,min,max){
+    return Math.max(min,Math.min(max,x));
+}
+
+function percent(x){
+    return Math.round(x*100)+"%";
+}
+
+function poissonUnder3(total){
+    return Math.exp(-total) *
+    (1 + total + (total*total)/2);
+}
+
+
+function analyze(){
+
+    const home=
+    document.getElementById("home").value.trim() ||
+    "Ev Sahibi";
+
+    const away=
+    document.getElementById("away").value.trim() ||
+    "Deplasman";
+
+    let hg=num("homeGF");
+    let ag=num("awayGF");
+
+    let hga=num("homeGA");
+    let aga=num("awayGA");
+
+    let hf=Number(document.getElementById("homeForm").value)||7;
+    let af=Number(document.getElementById("awayForm").value)||7;
+
+    let mode=document.getElementById("mode").value;
+
+
+    /*
+       Basit başlangıç modeli.
+       Gerçek canlı veri sistemi değildir.
+    */
+
+    let homeExpected=(hg+aga)/2;
+    let awayExpected=(ag+hga)/2;
+
+    /*
+       Ev sahibi avantajı
+    */
+
+    homeExpected+=0.15;
+
+
+    /*
+       Form etkisi
+    */
+
+    let formDiff=(hf-af)/15;
+
+    homeExpected+=formDiff*0.20;
+    awayExpected-=formDiff*0.20;
+
+
+    /*
+       Analiz tipleri
+    */
+
+    if(mode==="goals"){
+        homeExpected*=1.08;
+        awayExpected*=1.08;
+    }
+
+    if(mode==="safe"){
+        homeExpected*=0.94;
+        awayExpected*=0.94;
+    }
+
+
+    homeExpected=Math.max(0.05,homeExpected);
+    awayExpected=Math.max(0.05,awayExpected);
+
+
+    let total=homeExpected+awayExpected;
+
+    /*
+       1X2 yaklaşık model
+    */
+
+    let difference=homeExpected-awayExpected;
+
+    let homeProb=
+        clamp(0.34+difference*0.16,0.08,0.76);
+
+    let awayProb=
+        clamp(0.32-difference*0.16,0.08,0.72);
+
+    let drawProb=
+        clamp(1-homeProb-awayProb,0.08,0.55);
+
+
+    /*
+       2.5 üst
+    */
+
+    let under25=poissonUnder3(total);
+
+    let over25=
+        clamp(1-under25,0.03,0.97);
+
+
+    /*
+       KG Var
+    */
+
+    let btts=
+        clamp(
+            (homeExpected/(homeExpected+1)) *
+            (awayExpected/(awayExpected+1)) *
+            1.35,
+            0.03,
+            0.97
+        );
+
+
+    let markets=[
+        ["1",homeProb],
+        ["X",drawProb],
+        ["2",awayProb]
+    ];
+
+    markets.sort((a,b)=>b[1]-a[1]);
+
+    let mainPick=markets[0];
+
+
+    /*
+       Güven seviyesi
+    */
+
+    let confidence=
+        Math.max(homeProb,drawProb,awayProb);
+
+    let confidenceText="Düşük";
+
+    if(confidence>=0.55)
+        confidenceText="Orta";
+
+    if(confidence>=0.65)
+        confidenceText="Yüksek";
+
+
+    document.getElementById("result").innerHTML=`
+
+        <div class="resultTitle">
+            ${home} 🆚 ${away}
+        </div>
+
+        <div class="marketGrid">
+
+            <div class="market ${mainPick[0]==="1"?"good":""}">
+                <div class="marketTitle">1</div>
+                <div class="marketValue">
+                    ${percent(homeProb)}
+                </div>
+            </div>
+
+            <div class="market ${mainPick[0]==="X"?"good":""}">
+                <div class="marketTitle">X</div>
+                <div class="marketValue">
+                    ${percent(drawProb)}
+                </div>
+            </div>
+
+            <div class="market ${mainPick[0]==="2"?"good":""}">
+                <div class="marketTitle">2</div>
+                <div class="marketValue">
+                    ${percent(awayProb)}
+                </div>
+            </div>
+
+            <div class="market">
+                <div class="marketTitle">2.5 ÜST</div>
+                <div class="marketValue">
+                    ${percent(over25)}
+                </div>
+            </div>
+
+            <div class="market">
+                <div class="marketTitle">KG VAR</div>
+                <div class="marketValue">
+                    ${percent(btts)}
+                </div>
+            </div>
+
+            <div class="market">
+                <div class="marketTitle">BEKLENEN GOL</div>
+                <div class="marketValue">
+                    ${total.toFixed(2)}
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="pick">
+
+            <b>Model sonucu</b>
+
+            <div style="margin-top:6px">
+                En yüksek 1X2 olasılığı:
+                <strong>${mainPick[0]}</strong>
+                (${percent(mainPick[1])})
+            </div>
+
+            <div style="margin-top:5px">
+                Model güven seviyesi:
+                <strong>${confidenceText}</strong>
+            </div>
+
+        </div>
+
+
+        <button
+        class="primary"
+        style="width:100%;margin-top:12px"
+        onclick="addCoupon(
+            '${home.replace(/'/g,"")} ',
+            '${away.replace(/'/g,"")}',
+            '${mainPick[0]}',
+            ${mainPick[1]}
+        )">
+
+        KUponA EKLE 🧾
+
+        </button>
+
+
+        <div class="note" style="margin-top:12px">
+
+        Bu sonuç yalnızca girilen verilere dayanan
+        basit bir istatistiksel modeldir.
+        Gerçek maç sonucunu garanti etmez.
+
+        </div>
+    `;
+
+}
+
+
+function addCoupon(home,away,pick,prob){
+
+    coupon.push({
+        home:home.trim(),
+        away:away.trim(),
+        pick:pick,
+        prob:Math.round(prob*100)
+    });
+
+    renderCoupon();
+}
+
+
+function renderCoupon(){
+
+    const box=document.getElementById("coupon");
+
+    if(coupon.length===0){
+
+        box.innerHTML=
+        '<div class="note" style="margin-top:8px">Henüz kupona maç eklenmedi.</div>';
+
+        return;
+    }
+
+
+    box.innerHTML=
+
+    coupon.map((m,index)=>`
+
+        <div class="couponRow">
+
+            <div>
+
+                <b>
+                    ${m.home} – ${m.away}
+                </b>
+
+                <div class="note">
+                    Model seçimi: ${m.pick}
+                    · ${m.prob}%
+                </div>
+
+            </div>
+
+            <button
+            class="secondary"
+            onclick="removeCoupon(${index})">
+
+            Sil
+
+            </button>
+
+        </div>
+
+    `).join("");
+}
+
+
+function removeCoupon(index){
+
+    coupon.splice(index,1);
+
+    renderCoupon();
+
+}
+
+
+function clearAll(){
+
+    document.getElementById("home").value="";
+    document.getElementById("away").value="";
+
+    document.getElementById("result").innerHTML=
+    '<div class="note">Henüz maç analizi yapılmadı.</div>';
+
+}
+
+
+</script>
+
+</body>
+</html>
