@@ -1,638 +1,230 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="tr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#08111f">
 <title>Kaan Match Analyzer</title>
-
 <style>
-*{box-sizing:border-box}
-
-body{
-    margin:0;
-    background:#08111f;
-    color:#f5f7fa;
-    font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display",Arial,sans-serif;
-}
-
-.app{
-    max-width:720px;
-    margin:auto;
-    padding:20px 15px 40px;
-}
-
-.header{
-    padding:10px 3px 20px;
-}
-
-.small{
-    color:#8292a8;
-    font-size:12px;
-    letter-spacing:1.5px;
-}
-
-h1{
-    margin:5px 0;
-    font-size:30px;
-}
-
-.subtitle{
-    color:#9ba9bb;
-    font-size:14px;
-}
-
-.card{
-    background:#101b2c;
-    border:1px solid #22334b;
-    border-radius:18px;
-    padding:16px;
-    margin-top:13px;
-}
-
-.grid{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:11px;
-}
-
-label{
-    display:block;
-    color:#9baabd;
-    font-size:12px;
-    margin-bottom:6px;
-}
-
-input,select{
-    width:100%;
-    padding:12px;
-    border-radius:11px;
-    border:1px solid #2a3d58;
-    background:#091422;
-    color:white;
-    font-size:16px;
-}
-
-button{
-    border:0;
-    border-radius:12px;
-    padding:13px 16px;
-    font-weight:800;
-    font-size:15px;
-    cursor:pointer;
-}
-
-.primary{
-    background:#dceaff;
-    color:#07111e;
-}
-
-.secondary{
-    background:#19283c;
-    color:#edf3fa;
-    border:1px solid #2c405c;
-}
-
-.full{
-    grid-column:1/-1;
-}
-
-.actions{
-    display:flex;
-    gap:9px;
-    margin-top:14px;
-}
-
-.actions button{
-    flex:1;
-}
-
-.marketGrid{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:9px;
-    margin-top:14px;
-}
-
-.market{
-    background:#0a1524;
-    border:1px solid #253750;
-    border-radius:13px;
-    padding:12px;
-}
-
-.marketTitle{
-    color:#91a1b5;
-    font-size:12px;
-}
-
-.marketValue{
-    font-size:21px;
-    font-weight:900;
-    margin-top:4px;
-}
-
-.good{
-    border-color:#5c779b;
-}
-
-.note{
-    color:#8999ad;
-    font-size:12px;
-    line-height:1.5;
-}
-
-.resultTitle{
-    font-size:20px;
-    font-weight:900;
-}
-
-.pick{
-    margin-top:14px;
-    padding:13px;
-    border-radius:13px;
-    background:#17273b;
-    border:1px solid #304761;
-}
-
-.couponRow{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    gap:10px;
-    padding:12px 0;
-    border-bottom:1px solid #24354c;
-}
-
-.couponRow:last-child{
-    border-bottom:0;
-}
-
-@media(max-width:520px){
-    .grid{
-        grid-template-columns:1fr;
-    }
-
-    .marketGrid{
-        grid-template-columns:1fr 1fr;
-    }
-
-    .full{
-        grid-column:auto;
-    }
-}
+:root{--bg:#07111f;--card:#0d1b2d;--card2:#10233a;--text:#f4f7fb;--muted:#91a0b5;--line:#20344e;--accent:#67a7ff;--good:#38d39f;--warn:#ffcc66;--bad:#ff6b7a}
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#07111f,#091827);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display",system-ui,sans-serif}
+button,input,select{font:inherit}button{border:0}.wrap{max-width:920px;margin:auto;padding:16px 14px 90px}.top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}.brand{font-size:24px;font-weight:800}.sub{font-size:12px;color:var(--muted);margin-top:3px}.pill{padding:8px 10px;border:1px solid var(--line);border-radius:999px;background:#0b1929;color:#bcd0e9;font-size:12px}
+.tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:12px 0}.tab{padding:11px;border-radius:12px;background:#0b1929;color:#aab8ca;border:1px solid var(--line)}.tab.active{background:#17365b;color:#fff;border-color:#2c6099}
+.card{background:rgba(13,27,45,.96);border:1px solid var(--line);border-radius:18px;padding:14px;margin:10px 0;box-shadow:0 8px 28px rgba(0,0,0,.14)}.row{display:flex;gap:10px;align-items:center}.between{justify-content:space-between}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+label{display:block;color:#9eacc0;font-size:12px;margin:4px 0 6px}input,select{width:100%;background:#091725;color:#f5f8fc;border:1px solid #28405d;border-radius:11px;padding:11px;outline:none}input:focus,select:focus{border-color:#5c9de9}
+.btn{background:#1d5fa5;color:#fff;border-radius:12px;padding:11px 14px;font-weight:700}.btn.secondary{background:#12263e}.btn.good{background:#126e58}.btn.danger{background:#6b2734}.btn:disabled{opacity:.5}
+h2,h3{margin:4px 0 10px}.muted{color:var(--muted)}.small{font-size:12px}.center{text-align:center}.loader{padding:24px;text-align:center;color:#9fb1c8}
+.match{display:grid;grid-template-columns:1fr auto 1fr;gap:8px;align-items:center}.team{text-align:center;font-weight:750}.logo{width:42px;height:42px;object-fit:contain;display:block;margin:0 auto 6px}.score{font-size:13px;color:#9fb1c8}.status{font-size:11px;color:#78b7ff;text-align:center}
+.tag{display:inline-block;padding:5px 8px;border-radius:999px;background:#102943;border:1px solid #21415f;color:#b8d7f5;font-size:11px;margin:2px}.tag.good{color:#6de0ba;border-color:#205d50}.tag.warn{color:#ffd98b;border-color:#665327}
+.statline{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #1a2c42;font-size:13px}.statline:last-child{border-bottom:0}.big{font-size:27px;font-weight:850}.prob{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.prob>div{background:#0a1929;border:1px solid #203a57;border-radius:13px;padding:10px;text-align:center}.odds{font-weight:800;font-size:18px}.hidden{display:none}.notice{padding:10px;border-radius:12px;background:#13263a;color:#a9bfd8;font-size:12px}.dangerText{color:#ff8793}.goodText{color:#58dfb1}.warnText{color:#ffd77d}
+.list{display:flex;flex-direction:column;gap:8px}.fixture{padding:11px;border:1px solid #1d3550;background:#0a1828;border-radius:13px}.fixture:active{transform:scale(.995)}
+.coupon-item{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;padding:10px;border-bottom:1px solid #1b3047}.coupon-item:last-child{border-bottom:0}.remove{background:#301821;color:#ff8c9b;border-radius:8px;padding:6px 8px}
+@media(max-width:620px){.grid2{grid-template-columns:1fr}.grid3{grid-template-columns:1fr 1fr}.wrap{padding-top:10px}.match{grid-template-columns:1fr 56px 1fr}}
 </style>
 </head>
-
 <body>
+<div class="wrap">
+  <div class="top">
+    <div><div class="brand">⚽ Kaan Match Analyzer</div><div class="sub">Canlı futbol verisi • istatistik • oran • analiz</div></div>
+    <div class="pill" id="apiStatus">Hazır</div>
+  </div>
 
-<div class="app">
+  <div class="tabs">
+    <button class="tab active" data-tab="matches">Bugün</button>
+    <button class="tab" data-tab="search">Takım Ara</button>
+    <button class="tab" data-tab="coupon">Kupon</button>
+  </div>
 
-<div class="header">
-    <div class="small">PERSONAL FOOTBALL ANALYZER</div>
-    <h1>Kaan Match Analyzer ⚽</h1>
-    <div class="subtitle">
-        Kupon yapmadan önce maç verilerini düzenli şekilde karşılaştır.
+  <section id="tab-matches">
+    <div class="card">
+      <div class="row between">
+        <div><h2>Bugünün Maçları</h2><div class="small muted" id="todayLabel"></div></div>
+        <button class="btn secondary" id="refreshBtn">↻ Yenile</button>
+      </div>
+      <div class="grid2" style="margin-top:10px">
+        <div><label>Lig filtresi</label><input id="leagueFilter" placeholder="Premier League, Süper Lig..."></div>
+        <div><label>Maç filtresi</label><input id="matchFilter" placeholder="Takım adı..."></div>
+      </div>
     </div>
+    <div id="matches" class="list"><div class="loader">Maçlar yükleniyor…</div></div>
+  </section>
+
+  <section id="tab-search" class="hidden">
+    <div class="card">
+      <h2>Takım Ara</h2>
+      <div class="row"><input id="teamSearch" placeholder="Örn. Galatasaray"><button class="btn" id="teamSearchBtn">Ara</button></div>
+    </div>
+    <div id="teamResults" class="list"></div>
+  </section>
+
+  <section id="tab-coupon" class="hidden">
+    <div class="card">
+      <div class="row between"><div><h2>Kupon Taslağı</h2><div class="small muted">Seçimleri buradan kontrol et.</div></div><button class="btn danger" id="clearCoupon">Temizle</button></div>
+      <div id="coupon"></div>
+      <div class="statline"><b>Toplam oran</b><b id="totalOdds">1.00</b></div>
+      <div class="notice">Bu ekran istatistiksel karar desteğidir; hiçbir seçim garanti değildir.</div>
+    </div>
+  </section>
+
+  <section id="detail" class="hidden"></section>
 </div>
-
-<div class="card">
-
-<div class="grid">
-
-<div>
-<label>Ev sahibi</label>
-<input id="home" placeholder="Galatasaray">
-</div>
-
-<div>
-<label>Deplasman</label>
-<input id="away" placeholder="Fenerbahçe">
-</div>
-
-<div>
-<label>Ev sahibi attığı gol ort.</label>
-<input id="homeGF" type="number" min="0" step="0.1" value="1.6">
-</div>
-
-<div>
-<label>Deplasman attığı gol ort.</label>
-<input id="awayGF" type="number" min="0" step="0.1" value="1.3">
-</div>
-
-<div>
-<label>Ev sahibi yediği gol ort.</label>
-<input id="homeGA" type="number" min="0" step="0.1" value="1.0">
-</div>
-
-<div>
-<label>Deplasman yediği gol ort.</label>
-<input id="awayGA" type="number" min="0" step="0.1" value="1.2">
-</div>
-
-<div>
-<label>Ev sahibinin son 5 maç puanı</label>
-<input id="homeForm" placeholder="10">
-</div>
-
-<div>
-<label>Deplasmanın son 5 maç puanı</label>
-<input id="awayForm" placeholder="7">
-</div>
-
-<div class="full">
-<label>Analiz tipi</label>
-<select id="mode">
-<option value="normal">Dengeli analiz</option>
-<option value="goals">Gol ağırlıklı</option>
-<option value="safe">Temkinli analiz</option>
-</select>
-</div>
-
-</div>
-
-<div class="actions">
-<button class="primary" onclick="analyze()">MAÇI ANALİZ ET 🔎</button>
-<button class="secondary" onclick="clearAll()">TEMİZLE</button>
-</div>
-
-</div>
-
-
-<div class="card" id="result">
-
-<div class="note">
-Henüz maç analizi yapılmadı.
-</div>
-
-</div>
-
-
-<div class="card">
-
-<div class="resultTitle">🧾 Kupon Taslağı</div>
-
-<div id="coupon">
-
-<div class="note" style="margin-top:8px">
-Henüz kupona maç eklenmedi.
-</div>
-
-</div>
-
-</div>
-
-
-<div class="card">
-
-<div class="resultTitle">ℹ️ Önemli</div>
-
-<div class="note" style="margin-top:8px">
-Bu uygulama kesin sonuç veya garanti kazanç üretmez.
-Model, girilen istatistiklerden yaklaşık olasılıklar üretir.
-Canlı veri bağlantısı sonraki sürümde eklenecek.
-</div>
-
-</div>
-
-</div>
-
 
 <script>
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+let fixtures=[], coupon=JSON.parse(localStorage.getItem('kaanCoupon')||'[]'), currentDetail=null;
 
-let coupon=[];
+function trDate(){
+  return new Intl.DateTimeFormat('tr-TR',{timeZone:'Europe/Istanbul',year:'numeric',month:'2-digit',day:'2-digit',weekday:'long'}).format(new Date());
+}
+function todayISO(){return new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Istanbul'}).format(new Date())}
+function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
+function pct(v){let n=Number(v); return Number.isFinite(n)?(n*100).toFixed(0)+'%':'—'}
+function fmtTime(x){try{return new Intl.DateTimeFormat('tr-TR',{timeZone:'Europe/Istanbul',hour:'2-digit',minute:'2-digit'}).format(new Date(x))}catch{return ''}}
+function statusText(s){return ({NS:'Başlamadı',TBD:'Belirsiz',LIVE:'Canlı',HT:'Devre Arası',FT:'Bitti',PST:'Ertelendi',CANC:'İptal'}[s]||s||'—')}
+function apiStatus(t){$('#apiStatus').textContent=t}
 
-function num(id){
-    return Math.max(0,Number(document.getElementById(id).value)||0);
+async function api(endpoint, params={}){
+  const qs=new URLSearchParams({endpoint,...params});
+  const r=await fetch('/api/football?'+qs.toString());
+  const j=await r.json().catch(()=>({}));
+  if(!r.ok) throw new Error(j.message||'API hatası');
+  return j;
 }
 
-function clamp(x,min,max){
-    return Math.max(min,Math.min(max,x));
+function showTab(name){
+  ['matches','search','coupon'].forEach(x=>$('#tab-'+x).classList.toggle('hidden',x!==name));
+  $('#detail').classList.add('hidden');
+  $$('.tab').forEach(b=>b.classList.toggle('active',b.dataset.tab===name));
+  if(name==='coupon')renderCoupon();
+}
+$$('.tab').forEach(b=>b.onclick=()=>showTab(b.dataset.tab));
+
+function renderMatches(){
+  const lf=$('#leagueFilter').value.toLowerCase(), mf=$('#matchFilter').value.toLowerCase();
+  const arr=fixtures.filter(f=>(!lf||String(f.league?.name).toLowerCase().includes(lf))&&(!mf||`${f.teams?.home?.name} ${f.teams?.away?.name}`.toLowerCase().includes(mf)));
+  $('#matches').innerHTML=arr.length?arr.map(f=>`
+    <button class="fixture" onclick="openMatch(${f.fixture.id})">
+      <div class="match">
+        <div class="team"><img class="logo" src="${esc(f.teams.home.logo)}"><div>${esc(f.teams.home.name)}</div></div>
+        <div><div class="status">${esc(statusText(f.fixture.status.short))}</div><div class="score">${f.goals?.home??'—'} : ${f.goals?.away??'—'}</div><div class="small muted">${fmtTime(f.fixture.date)}</div></div>
+        <div class="team"><img class="logo" src="${esc(f.teams.away.logo)}"><div>${esc(f.teams.away.name)}</div></div>
+      </div>
+      <div class="small muted center" style="margin-top:7px">${esc(f.league?.name||'')} • ${esc(f.league?.country||'')}</div>
+    </button>`).join(''):'<div class="card center muted">Filtreye uygun maç yok.</div>';
+}
+$('#leagueFilter').oninput=renderMatches; $('#matchFilter').oninput=renderMatches;
+
+async function loadToday(){
+  apiStatus('Yükleniyor…'); $('#todayLabel').textContent=trDate();
+  $('#matches').innerHTML='<div class="loader">Bugünün maçları getiriliyor…</div>';
+  try{
+    const j=await api('fixtures',{date:todayISO(),timezone:'Europe/Istanbul'});
+    fixtures=j.response||[]; renderMatches(); apiStatus('Canlı veri ✓');
+  }catch(e){$('#matches').innerHTML=`<div class="card dangerText">Veri alınamadı: ${esc(e.message)}</div>`;apiStatus('Hata')}
+}
+$('#refreshBtn').onclick=loadToday;
+
+async function searchTeams(){
+  const q=$('#teamSearch').value.trim(); if(!q)return;
+  $('#teamResults').innerHTML='<div class="loader">Aranıyor…</div>';
+  try{
+    const j=await api('teams',{search:q});
+    const arr=j.response||[];
+    $('#teamResults').innerHTML=arr.map(x=>`<button class="fixture" onclick="teamFixtures(${x.team.id},'${esc(x.team.name).replace(/'/g,"&#39;")}')"><div class="row"><img class="logo" src="${esc(x.team.logo)}"><div><b>${esc(x.team.name)}</b><div class="small muted">${esc(x.team.country||'')}</div></div></div></button>`).join('')||'<div class="card muted">Takım bulunamadı.</div>';
+  }catch(e){$('#teamResults').innerHTML=`<div class="card dangerText">${esc(e.message)}</div>`}
+}
+$('#teamSearchBtn').onclick=searchTeams; $('#teamSearch').onkeydown=e=>{if(e.key==='Enter')searchTeams()};
+
+async function teamFixtures(id,name){
+  showTab('matches'); $('#matches').innerHTML='<div class="loader">Takım maçları yükleniyor…</div>';
+  try{const j=await api('fixtures',{team:id,last:10});fixtures=j.response||[];$('#todayLabel').textContent=name+' • son 10 maç';renderMatches()}catch(e){$('#matches').innerHTML=`<div class="card dangerText">${esc(e.message)}</div>`}
 }
 
-function percent(x){
-    return Math.round(x*100)+"%";
+function pickPrediction(p){
+  const r=p?.response?.[0]||p?.response?.[0]?.prediction?p.response[0]:p?.response?.prediction? p.response:p?.response?.[0];
+  return p?.response?.[0]?.predictions||p?.response?.predictions||r?.predictions||r||{};
 }
-
-function poissonUnder3(total){
-    return Math.exp(-total) *
-    (1 + total + (total*total)/2);
-}
-
-
-function analyze(){
-
-    const home=
-    document.getElementById("home").value.trim() ||
-    "Ev Sahibi";
-
-    const away=
-    document.getElementById("away").value.trim() ||
-    "Deplasman";
-
-    let hg=num("homeGF");
-    let ag=num("awayGF");
-
-    let hga=num("homeGA");
-    let aga=num("awayGA");
-
-    let hf=Number(document.getElementById("homeForm").value)||7;
-    let af=Number(document.getElementById("awayForm").value)||7;
-
-    let mode=document.getElementById("mode").value;
-
-
-    /*
-       Basit başlangıç modeli.
-       Gerçek canlı veri sistemi değildir.
-    */
-
-    let homeExpected=(hg+aga)/2;
-    let awayExpected=(ag+hga)/2;
-
-    /*
-       Ev sahibi avantajı
-    */
-
-    homeExpected+=0.15;
-
-
-    /*
-       Form etkisi
-    */
-
-    let formDiff=(hf-af)/15;
-
-    homeExpected+=formDiff*0.20;
-    awayExpected-=formDiff*0.20;
-
-
-    /*
-       Analiz tipleri
-    */
-
-    if(mode==="goals"){
-        homeExpected*=1.08;
-        awayExpected*=1.08;
+function findMarketOdds(data){
+  let out={home:null,draw:null,away:null,over25:null,under25:null,bttsYes:null,bttsNo:null};
+  const books=data?.response||[];
+  for(const b of books){
+    for(const bet of (b.bookmakers||[])){
+      for(const m of (bet.bets||[])){
+        const n=(m.name||'').toLowerCase();
+        if(n.includes('match winner')||n==='1x2'){
+          for(const v of (m.values||[])){const val=(v.value||'').toLowerCase();const o=Number(v.odd);if(val==='home')out.home??=o;else if(val==='draw')out.draw??=o;else if(val==='away')out.away??=o;}
+        }
+        if(n.includes('over/under 2.5')||n.includes('over/under')){
+          for(const v of (m.values||[])){const val=(v.value||'').toLowerCase();const o=Number(v.odd);if(val==='over 2.5')out.over25??=o;if(val==='under 2.5')out.under25??=o;}
+        }
+        if(n.includes('both teams')||n.includes('btts')){
+          for(const v of (m.values||[])){const val=(v.value||'').toLowerCase();const o=Number(v.odd);if(val==='yes')out.bttsYes??=o;if(val==='no')out.bttsNo??=o;}
+        }
+      }
     }
+  } return out;
+}
+function probFromPrediction(pred){
+  const p=pred?.percent||{}; 
+  const h=Number(String(p.home||'').replace('%','')), d=Number(String(p.draw||'').replace('%','')), a=Number(String(p.away||'').replace('%',''));
+  return [h,d,a].every(Number.isFinite)?[h/100,d/100,a/100]:[null,null,null];
+}
+function fair(o){return o&&o>0?(1/o).toFixed(2):'—'}
+function edge(prob,odds){return(prob&&odds&&odds>0)?((prob*odds-1)*100).toFixed(1)+'%':'—'}
 
-    if(mode==="safe"){
-        homeExpected*=0.94;
-        awayExpected*=0.94;
-    }
-
-
-    homeExpected=Math.max(0.05,homeExpected);
-    awayExpected=Math.max(0.05,awayExpected);
-
-
-    let total=homeExpected+awayExpected;
-
-    /*
-       1X2 yaklaşık model
-    */
-
-    let difference=homeExpected-awayExpected;
-
-    let homeProb=
-        clamp(0.34+difference*0.16,0.08,0.76);
-
-    let awayProb=
-        clamp(0.32-difference*0.16,0.08,0.72);
-
-    let drawProb=
-        clamp(1-homeProb-awayProb,0.08,0.55);
-
-
-    /*
-       2.5 üst
-    */
-
-    let under25=poissonUnder3(total);
-
-    let over25=
-        clamp(1-under25,0.03,0.97);
-
-
-    /*
-       KG Var
-    */
-
-    let btts=
-        clamp(
-            (homeExpected/(homeExpected+1)) *
-            (awayExpected/(awayExpected+1)) *
-            1.35,
-            0.03,
-            0.97
-        );
-
-
-    let markets=[
-        ["1",homeProb],
-        ["X",drawProb],
-        ["2",awayProb]
-    ];
-
-    markets.sort((a,b)=>b[1]-a[1]);
-
-    let mainPick=markets[0];
-
-
-    /*
-       Güven seviyesi
-    */
-
-    let confidence=
-        Math.max(homeProb,drawProb,awayProb);
-
-    let confidenceText="Düşük";
-
-    if(confidence>=0.55)
-        confidenceText="Orta";
-
-    if(confidence>=0.65)
-        confidenceText="Yüksek";
-
-
-    document.getElementById("result").innerHTML=`
-
-        <div class="resultTitle">
-            ${home} 🆚 ${away}
+window.openMatch=async function(id){
+  $('#detail').classList.remove('hidden'); $('#tab-matches').classList.add('hidden'); $('#tab-search').classList.add('hidden'); $('#tab-coupon').classList.add('hidden'); $$('.tab').forEach(b=>b.classList.remove('active'));
+  $('#detail').innerHTML='<div class="card loader">Maçın detayları hazırlanıyor…</div>';
+  window.scrollTo({top:0,behavior:'smooth'});
+  try{
+    const f=fixtures.find(x=>x.fixture.id===id)||{};
+    const [pred,odds,h2h,inj,lineups,stats]=await Promise.allSettled([
+      api('predictions',{fixture:id}),api('odds',{fixture:id}),api('headtohead',{h2h:`${f.teams.home.id}-${f.teams.away.id}`,last:5}),api('injuries',{fixture:id}),api('lineups',{fixture:id}),api('statistics',{fixture:id})
+    ]);
+    const P=pred.status==='fulfilled'?pickPrediction(pred.value):{}, O=odds.status==='fulfilled'?findMarketOdds(odds.value):{}, probs=probFromPrediction(P);
+    const hg=P.goals?.home, ag=P.goals?.away, advice=P.advice||P.winner?.name||'Model görüşü yok';
+    const confidence=probs.some(x=>x!==null)?Math.max(...probs):null;
+    const h2=(h2h.status==='fulfilled'?(h2h.value.response||[]):[]), injuries=inj.status==='fulfilled'?(inj.value.response||[]):[];
+    const ls=lineups.status==='fulfilled'?(lineups.value.response||[]):[];
+    const ss=stats.status==='fulfilled'?(stats.value.response||[]):[];
+    currentDetail={id,f,P,O,probs};
+    const picks=[['MS 1',probs[0],O.home],['X',probs[1],O.draw],['MS 2',probs[2],O.away]];
+    $('#detail').innerHTML=`
+      <div class="card"><button class="btn secondary" onclick="backToMatches()">← Maçlara dön</button></div>
+      <div class="card">
+        <div class="small muted">${esc(f.league?.name||'')} • ${fmtTime(f.fixture.date)}</div>
+        <div class="match" style="margin:15px 0">
+          <div class="team"><img class="logo" src="${esc(f.teams.home.logo)}"><div>${esc(f.teams.home.name)}</div></div>
+          <div class="center"><div class="big">${f.goals?.home??'—'}:${f.goals?.away??'—'}</div><div class="status">${esc(statusText(f.fixture.status.short))}</div></div>
+          <div class="team"><img class="logo" src="${esc(f.teams.away.logo)}"><div>${esc(f.teams.away.name)}</div></div>
         </div>
-
-        <div class="marketGrid">
-
-            <div class="market ${mainPick[0]==="1"?"good":""}">
-                <div class="marketTitle">1</div>
-                <div class="marketValue">
-                    ${percent(homeProb)}
-                </div>
-            </div>
-
-            <div class="market ${mainPick[0]==="X"?"good":""}">
-                <div class="marketTitle">X</div>
-                <div class="marketValue">
-                    ${percent(drawProb)}
-                </div>
-            </div>
-
-            <div class="market ${mainPick[0]==="2"?"good":""}">
-                <div class="marketTitle">2</div>
-                <div class="marketValue">
-                    ${percent(awayProb)}
-                </div>
-            </div>
-
-            <div class="market">
-                <div class="marketTitle">2.5 ÜST</div>
-                <div class="marketValue">
-                    ${percent(over25)}
-                </div>
-            </div>
-
-            <div class="market">
-                <div class="marketTitle">KG VAR</div>
-                <div class="marketValue">
-                    ${percent(btts)}
-                </div>
-            </div>
-
-            <div class="market">
-                <div class="marketTitle">BEKLENEN GOL</div>
-                <div class="marketValue">
-                    ${total.toFixed(2)}
-                </div>
-            </div>
-
-        </div>
-
-
-        <div class="pick">
-
-            <b>Model sonucu</b>
-
-            <div style="margin-top:6px">
-                En yüksek 1X2 olasılığı:
-                <strong>${mainPick[0]}</strong>
-                (${percent(mainPick[1])})
-            </div>
-
-            <div style="margin-top:5px">
-                Model güven seviyesi:
-                <strong>${confidenceText}</strong>
-            </div>
-
-        </div>
-
-
-        <button
-        class="primary"
-        style="width:100%;margin-top:12px"
-        onclick="addCoupon(
-            '${home.replace(/'/g,"")} ',
-            '${away.replace(/'/g,"")}',
-            '${mainPick[0]}',
-            ${mainPick[1]}
-        )">
-
-        KUponA EKLE 🧾
-
-        </button>
-
-
-        <div class="note" style="margin-top:12px">
-
-        Bu sonuç yalnızca girilen verilere dayanan
-        basit bir istatistiksel modeldir.
-        Gerçek maç sonucunu garanti etmez.
-
-        </div>
+        <div class="notice"><b>Model notu:</b> ${esc(advice)}${hg!=null&&ag!=null?` • tahmini skor ${esc(hg)}-${esc(ag)}`:''}</div>
+      </div>
+      <div class="card"><h3>1X2 model olasılıkları</h3><div class="prob">${picks.map((x,i)=>`<div><div class="muted small">${x[0]}</div><div class="big">${x[1]!=null?pct(x[1]):'—'}</div><div class="small">Adil oran: ${fair(x[1])}</div><div class="small">Piyasa: ${x[2]??'—'}</div><div class="${edge(x[1],x[2])!=='—'&&parseFloat(edge(x[1],x[2]))>0?'goodText':'muted'} small">Fark: ${edge(x[1],x[2])}</div><button class="btn good small" style="margin-top:7px" onclick="addPick('${esc(f.teams.home.name)}','${esc(f.teams.away.name)}','${x[0]}',${x[2]||1})">Kupona ekle</button></div>`).join('')}</div><div style="margin-top:10px" class="tag ${confidence&&confidence>.6?'good':'warn'}">Model güveni: ${confidence?pct(confidence):'—'}</div></div>
+      <div class="card"><h3>Gol piyasaları</h3><div class="grid2"><div class="statline"><span>Üst 2.5</span><b>${O.over25??'—'}</b></div><div class="statline"><span>Alt 2.5</span><b>${O.under25??'—'}</b></div><div class="statline"><span>KG Var</span><b>${O.bttsYes??'—'}</b></div><div class="statline"><span>KG Yok</span><b>${O.bttsNo??'—'}</b></div></div><div class="small muted" style="margin-top:8px">API modelinin gol tahmini: ${hg??'—'} - ${ag??'—'} • ${esc(P.under_over||'')}</div></div>
+      <div class="card"><h3>H2H — son ${h2.length}</h3>${h2.length?h2.map(x=>`<div class="statline"><span>${fmtTime(x.fixture.date)}<br><small class="muted">${esc(x.league?.name||'')}</small></span><b>${x.goals?.home??0} : ${x.goals?.away??0}</b></div>`).join(''):'<div class="muted small">H2H verisi yok.</div>'}</div>
+      <div class="card"><h3>Sakat / cezalı</h3>${injuries.length?injuries.slice(0,20).map(x=>`<div class="statline"><span>${esc(x.player?.name||'Oyuncu')}<br><small class="muted">${esc(x.type||'')} ${esc(x.reason||'')}</small></span><b>${esc(x.team?.name||'')}</b></div>`).join(''):'<div class="muted small">Bu maç için veri yok.</div>'}</div>
+      <div class="card"><h3>Muhtemel kadro</h3>${ls.length?ls.map(t=>`<div style="margin:8px 0"><b>${esc(t.team?.name||'')}</b><div>${(t.startXI||[]).slice(0,11).map(p=>`<span class="tag">${esc(p.player?.name||'')}</span>`).join('')}</div></div>`).join(''):'<div class="muted small">Kadro verisi henüz yayınlanmamış olabilir.</div>'}</div>
+      <div class="card"><h3>Maç istatistikleri</h3>${ss.length?ss.map(t=>`<div style="margin:8px 0"><b>${esc(t.team?.name||'')}</b>${(t.statistics||[]).slice(0,12).map(s=>`<div class="statline"><span>${esc(s.type||'')}</span><b>${esc(s.value??'—')}</b></div>`).join('')}</div>`).join(''):'<div class="muted small">Maç başlamadıysa istatistik gelmez.</div>'}</div>
     `;
-
+  }catch(e){$('#detail').innerHTML=`<div class="card dangerText">${esc(e.message)}</div>`}
 }
+window.backToMatches=()=>{showTab('matches');$('#detail').classList.add('hidden')}
 
-
-function addCoupon(home,away,pick,prob){
-
-    coupon.push({
-        home:home.trim(),
-        away:away.trim(),
-        pick:pick,
-        prob:Math.round(prob*100)
-    });
-
-    renderCoupon();
+function addPick(home,away,market,odd){
+  const key=`${home}|${away}|${market}`;
+  if(!coupon.some(x=>x.key===key))coupon.push({key,home,away,market,odd:Number(odd)||1});
+  localStorage.setItem('kaanCoupon',JSON.stringify(coupon));renderCoupon();alert('Kupona eklendi ✓');
 }
-
-
+window.addPick=addPick;
 function renderCoupon(){
-
-    const box=document.getElementById("coupon");
-
-    if(coupon.length===0){
-
-        box.innerHTML=
-        '<div class="note" style="margin-top:8px">Henüz kupona maç eklenmedi.</div>';
-
-        return;
-    }
-
-
-    box.innerHTML=
-
-    coupon.map((m,index)=>`
-
-        <div class="couponRow">
-
-            <div>
-
-                <b>
-                    ${m.home} – ${m.away}
-                </b>
-
-                <div class="note">
-                    Model seçimi: ${m.pick}
-                    · ${m.prob}%
-                </div>
-
-            </div>
-
-            <button
-            class="secondary"
-            onclick="removeCoupon(${index})">
-
-            Sil
-
-            </button>
-
-        </div>
-
-    `).join("");
+  $('#coupon').innerHTML=coupon.length?coupon.map((x,i)=>`<div class="coupon-item"><div><b>${esc(x.market)}</b><div class="small muted">${esc(x.home)} — ${esc(x.away)}</div><div class="odds">${Number(x.odd).toFixed(2)}</div></div><button class="remove" onclick="removePick(${i})">Sil</button></div>`).join(''):'<div class="center muted" style="padding:25px">Henüz seçim yok.</div>';
+  const total=coupon.reduce((a,x)=>a*(Number(x.odd)||1),1);$('#totalOdds').textContent=total.toFixed(2);
 }
+window.removePick=i=>{coupon.splice(i,1);localStorage.setItem('kaanCoupon',JSON.stringify(coupon));renderCoupon()}
+$('#clearCoupon').onclick=()=>{coupon=[];localStorage.removeItem('kaanCoupon');renderCoupon()}
 
-
-function removeCoupon(index){
-
-    coupon.splice(index,1);
-
-    renderCoupon();
-
-}
-
-
-function clearAll(){
-
-    document.getElementById("home").value="";
-    document.getElementById("away").value="";
-
-    document.getElementById("result").innerHTML=
-    '<div class="note">Henüz maç analizi yapılmadı.</div>';
-
-}
-
-
+loadToday();renderCoupon();
 </script>
-
 </body>
 </html>
