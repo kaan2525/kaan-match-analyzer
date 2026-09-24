@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#08111f">
-<title>Kaan Match Analyzer</title>
+<title>Kaan Match Analyzer V7</title>
 <style>
 :root{--bg:#050c16;--card:#0b1727;--card2:#10243b;--text:#f6f8fc;--muted:#8ea2ba;--line:#1d3855;--accent:#5da8ff;--good:#35d6a0;--warn:#ffd166;--bad:#ff6f7e;--soft:#081521}
 *{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 50% -10%,#12365a 0,#081523 34%,#050c16 78%);min-height:100vh;color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display",system-ui,sans-serif}
@@ -30,7 +30,7 @@ h2,h3{margin:4px 0 10px}.muted{color:var(--muted)}.small{font-size:12px}.center{
 <body>
 <div class="wrap">
   <div class="top">
-    <div><div class="brand">⚽ Kaan Match Analyzer</div><div class="sub">Canlı futbol verisi • istatistik • oran • analiz</div></div>
+    <div><div class="brand">⚽ Kaan Match Analyzer <span style="font-size:11px;color:#79b9ff">V7</span></div><div class="sub">Canlı futbol verisi • istatistik • oran • analiz</div></div>
     <div class="pill" id="apiStatus">Hazır</div>
   </div>
 
@@ -50,6 +50,7 @@ h2,h3{margin:4px 0 10px}.muted{color:var(--muted)}.small{font-size:12px}.center{
         <div><label>Lig filtresi</label><input id="leagueFilter" placeholder="Premier League, Süper Lig..."></div>
         <div><label>Maç filtresi</label><input id="matchFilter" placeholder="Takım adı..."></div>
       </div>
+      <div class="small muted" style="margin-top:9px">Not: API bugün 0 maç döndürürse uygulama bunu açıkça gösterecek; sessizce boş ekran bırakmaz.</div>
     </div>
     <div id="matches"><div class="loader">Maçlar yükleniyor…</div></div>
   </section>
@@ -90,10 +91,19 @@ function apiStatus(t){$('#apiStatus').textContent=t}
 
 async function api(endpoint, params={}){
   const qs=new URLSearchParams({endpoint,...params});
-  const r=await fetch('/api/football?'+qs.toString());
+  const r=await fetch('/api/football?'+qs.toString(),{cache:'no-store'});
   const j=await r.json().catch(()=>({}));
-  if(!r.ok) throw new Error(j.message||'API hatası');
+  const errs=j?.errors||{};
+  const errText=Object.values(errs).filter(Boolean).join(' • ');
+  if(!r.ok) throw new Error(j.message||errText||('API HTTP '+r.status));
+  if(errText) throw new Error(errText);
   return j;
+}
+
+function apiMeta(j){
+  const errors=j?.errors||{};
+  const errorText=Object.values(errors).filter(Boolean).join(' • ');
+  return {count:Array.isArray(j?.response)?j.response.length:Number(j?.results)||0,errorText};
 }
 
 function showTab(name){
@@ -136,7 +146,41 @@ function renderMatches(){
   let html='';for(const [key,title,cls,label] of groups){const a=arr.filter(x=>statusGroup(x.fixture?.status?.short)===key);if(!a.length)continue;html+=`<div class="status-section"><div class="status-head"><h3>${title}</h3><span class="status-badge ${cls}">${a.length} maç • ${label}</span></div><div class="list">${a.map(fixtureCard).join('')}</div></div>`}
   $('#matches').innerHTML=html||'<div class="card empty-soft"><strong>Bu filtreyle maç bulunamadı.</strong><br>Filtreleri temizleyip tekrar deneyebilirsin.</div>';
 }
-async function loadToday(){apiStatus('Yükleniyor…');$('#todayLabel').textContent=trDate();$('#matches').innerHTML='<div class="loader">Bugünün maçları getiriliyor…</div>';try{const j=await api('fixtures',{date:todayISO(),timezone:'Europe/Istanbul'});fixtures=j.response||[];renderMatches();apiStatus('Canlı veri ✓')}catch(e){$('#matches').innerHTML=`<div class="card dangerText">Veri alınamadı: ${esc(e.message)}</div>`;apiStatus('Hata')}}
+async function loadToday(){
+  apiStatus('Yükleniyor…');
+  const day=todayISO();
+  $('#todayLabel').textContent=trDate()+' • '+day;
+  $('#matches').innerHTML='<div class="loader">Bugünün maçları getiriliyor…</div>';
+  try{
+    const j=await api('fixtures',{date:day,timezone:'Europe/Istanbul'});
+    fixtures=Array.isArray(j.response)?j.response:[];
+    const meta=apiMeta(j);
+    renderMatches();
+    if(fixtures.length){
+      apiStatus(`Canlı veri ✓ • ${fixtures.length} maç`);
+      return;
+    }
+    apiStatus('Veri geldi • maç yok');
+    $('#matches').innerHTML=`<div class="card empty-soft"><strong>Bugün için API'den maç dönmedi.</strong><br><span class="muted">Tarih: ${esc(day)} • API sonucu: 0 maç</span><br><br><button class="btn secondary" onclick="loadLiveFallback()">Canlı maçları kontrol et</button></div>`;
+  }catch(e){
+    $('#matches').innerHTML=`<div class="card"><div class="dangerText"><b>API verisi alınamadı.</b></div><div class="small muted" style="margin-top:8px">${esc(e.message)}</div><div class="small muted" style="margin-top:8px">Bu mesaj API limitinin dolması, anahtar/hesap sorunu veya geçici API hatası anlamına gelebilir.</div><button class="btn secondary" style="margin-top:10px" onclick="loadToday()">Tekrar dene</button></div>`;
+    apiStatus('API hatası');
+  }
+}
+
+async function loadLiveFallback(){
+  $('#matches').innerHTML='<div class="loader">Canlı maçlar kontrol ediliyor…</div>';
+  try{
+    const j=await api('fixtures',{live:'all'});
+    const arr=Array.isArray(j.response)?j.response:[];
+    fixtures=arr;
+    if(arr.length){renderMatches();apiStatus(`Canlı veri ✓ • ${arr.length} canlı maç`);}
+    else $('#matches').innerHTML='<div class="card empty-soft"><strong>Şu anda canlı maç da dönmedi.</strong><br>Bu durumda sorun büyük ihtimalle API hesabı/limit tarafındadır.</div>';
+  }catch(e){
+    $('#matches').innerHTML=`<div class="card dangerText"><b>Canlı veri alınamadı.</b><br><span class="small">${esc(e.message)}</span></div>`;
+    apiStatus('API hatası');
+  }
+}
 $('#refreshBtn').onclick=loadToday;$('#leagueFilter').oninput=renderMatches;$('#matchFilter').oninput=renderMatches;
 
 async function searchTeams(){
