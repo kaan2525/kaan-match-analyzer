@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#08111f">
 <title>Kaan Match Analyzer</title>
 <style>
-:root{--bg:#07111f;--card:#0d1b2d;--card2:#10233a;--text:#f4f7fb;--muted:#91a0b5;--line:#20344e;--accent:#67a7ff;--good:#38d39f;--warn:#ffcc66;--bad:#ff6b7a}
+:root{--bg:#07111f;--card:#0d1b2d;--card2:#10233a;--text:#f4f7fb;--muted:#91a0b5;--line:#20344e;--accent:#67a7ff;--good:#38d39f;--warn:#ffcc66;--bad:#ff6b7a;--soft:#0a1929}
 *{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#07111f,#091827);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display",system-ui,sans-serif}
 button,input,select{font:inherit}button{border:0}.wrap{max-width:920px;margin:auto;padding:16px 14px 90px}.top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}.brand{font-size:24px;font-weight:800}.sub{font-size:12px;color:var(--muted);margin-top:3px}.pill{padding:8px 10px;border:1px solid var(--line);border-radius:999px;background:#0b1929;color:#bcd0e9;font-size:12px}
 .tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:12px 0}.tab{padding:11px;border-radius:12px;background:#0b1929;color:#aab8ca;border:1px solid var(--line)}.tab.active{background:#17365b;color:#fff;border-color:#2c6099}
@@ -16,9 +16,11 @@ label{display:block;color:#9eacc0;font-size:12px;margin:4px 0 6px}input,select{w
 h2,h3{margin:4px 0 10px}.muted{color:var(--muted)}.small{font-size:12px}.center{text-align:center}.loader{padding:24px;text-align:center;color:#9fb1c8}
 .match{display:grid;grid-template-columns:1fr auto 1fr;gap:8px;align-items:center}.team{text-align:center;font-weight:750}.logo{width:42px;height:42px;object-fit:contain;display:block;margin:0 auto 6px}.score{font-size:13px;color:#9fb1c8}.status{font-size:11px;color:#78b7ff;text-align:center}
 .tag{display:inline-block;padding:5px 8px;border-radius:999px;background:#102943;border:1px solid #21415f;color:#b8d7f5;font-size:11px;margin:2px}.tag.good{color:#6de0ba;border-color:#205d50}.tag.warn{color:#ffd98b;border-color:#665327}
-.statline{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #1a2c42;font-size:13px}.statline:last-child{border-bottom:0}.big{font-size:27px;font-weight:850}.prob{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.prob>div{background:#0a1929;border:1px solid #203a57;border-radius:13px;padding:10px;text-align:center}.odds{font-weight:800;font-size:18px}.hidden{display:none}.notice{padding:10px;border-radius:12px;background:#13263a;color:#a9bfd8;font-size:12px}.dangerText{color:#ff8793}.goodText{color:#58dfb1}.warnText{color:#ffd77d}
+.statline{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #1a2c42;font-size:13px}.statline:last-child{border-bottom:0}.marketrow{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:11px 0;border-bottom:1px solid #1a2c42}.marketrow:last-of-type{border-bottom:0}.big{font-size:27px;font-weight:850}.prob{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.prob>div{background:#0a1929;border:1px solid #203a57;border-radius:13px;padding:10px;text-align:center}.odds{font-weight:800;font-size:18px}.hidden{display:none}.notice{padding:10px;border-radius:12px;background:#13263a;color:#a9bfd8;font-size:12px}.dangerText{color:#ff8793}.goodText{color:#58dfb1}.warnText{color:#ffd77d}
 .list{display:flex;flex-direction:column;gap:8px}.fixture{padding:11px;border:1px solid #1d3550;background:#0a1828;border-radius:13px}.fixture:active{transform:scale(.995)}
 .coupon-item{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;padding:10px;border-bottom:1px solid #1b3047}.coupon-item:last-child{border-bottom:0}.remove{background:#301821;color:#ff8c9b;border-radius:8px;padding:6px 8px}
+.detail-title{font-size:20px;font-weight:850}.section-kicker{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:#7f94ad;margin-bottom:5px}.summary-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:10px}.summary-box{background:var(--soft);border:1px solid #1f3b59;border-radius:14px;padding:12px}.summary-score{font-size:30px;font-weight:900;letter-spacing:.02em}.confidence{display:flex;align-items:center;justify-content:space-between;gap:10px}.bar{height:8px;border-radius:999px;background:#12263c;overflow:hidden;margin-top:8px}.bar>i{display:block;height:100%;background:var(--accent);border-radius:999px}.prob-card{position:relative;padding:13px 10px!important}.prob-label{font-weight:800;font-size:14px}.prob-big{font-size:30px;font-weight:900;margin:5px 0}.meta-line{font-size:12px;color:#aab8ca;line-height:1.55}.edge-pill{display:inline-block;margin-top:6px;padding:5px 7px;border-radius:999px;font-size:11px;border:1px solid #28435f}.edge-pos{color:#72e2bd;border-color:#256552;background:#0b2a24}.edge-neg{color:#ff9aa5;border-color:#63303a;background:#2a1218}.edge-neu{color:#b6c3d3}.market-note{margin-top:8px}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.form-card{background:var(--soft);border:1px solid #1f3b59;border-radius:14px;padding:12px}.result-row{display:flex;gap:5px;flex-wrap:wrap;margin:7px 0}.result{min-width:28px;height:28px;display:inline-flex;align-items:center;justify-content:center;border-radius:8px;font-weight:900;font-size:12px;border:1px solid #29425d}.result.w{background:#0d3a31;color:#72e2bd;border-color:#246454}.result.d{background:#3a3215;color:#ffd77d;border-color:#685a27}.result.l{background:#3b1820;color:#ff9aa5;border-color:#67303a}.mini-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:7px}.mini-stat{padding:8px;border-radius:10px;background:#0c1d30}.mini-stat b{display:block;font-size:16px}.mini-stat span{font-size:10px;color:#8798ad}.market-card{background:var(--soft);border:1px solid #1f3b59;border-radius:14px;padding:4px 12px}.marketrow{padding:12px 0}.market-main{display:flex;justify-content:space-between;gap:12px;align-items:center}.market-name{font-weight:800}.market-prob{font-size:18px;font-weight:900}.market-details{display:flex;gap:10px;flex-wrap:wrap;margin-top:3px;font-size:11px;color:#9fb0c3}.empty-soft{padding:12px;background:var(--soft);border:1px dashed #29415d;border-radius:12px;color:#93a5b9;font-size:12px}
+@media(max-width:620px){.summary-grid,.form-grid{grid-template-columns:1fr}.grid2{grid-template-columns:1fr}.grid3{grid-template-columns:1fr 1fr}.wrap{padding-top:10px}.match{grid-template-columns:1fr 56px 1fr}}
 @media(max-width:620px){.grid2{grid-template-columns:1fr}.grid3{grid-template-columns:1fr 1fr}.wrap{padding-top:10px}.match{grid-template-columns:1fr 56px 1fr}}
 </style>
 </head>
@@ -165,47 +167,115 @@ function findMarketOdds(data){
   } return out;
 }
 function probFromPrediction(pred){
-  const p=pred?.percent||{}; 
-  const h=Number(String(p.home||'').replace('%','')), d=Number(String(p.draw||'').replace('%','')), a=Number(String(p.away||'').replace('%',''));
-  return [h,d,a].every(Number.isFinite)?[h/100,d/100,a/100]:[null,null,null];
+  const p=pred?.percent||{};
+  const vals=[p.home,p.draw,p.away].map(v=>Number(String(v??'').replace('%','')));
+  return vals.every(Number.isFinite)?vals.map(v=>v/100):[null,null,null];
 }
 function fair(o){return o&&o>0?(1/o).toFixed(2):'—'}
-function edge(prob,odds){return(prob&&odds&&odds>0)?((prob*odds-1)*100).toFixed(1)+'%':'—'}
+function edge(prob,odds){return(prob!=null&&odds&&odds>0)?((prob*odds-1)*100).toFixed(1)+'%':'—'}
+function edgeClass(e){if(e==='—')return'edge-neu';const n=parseFloat(e);return n>0?'edge-pos':n<0?'edge-neg':'edge-neu'}
+function poissonPmf(k,lambda){if(lambda<=0)return k===0?1:0;let f=1;for(let i=2;i<=k;i++)f*=i;return Math.exp(-lambda)*Math.pow(lambda,k)/f}
+function goalModel(hg,ag,form){
+  let h=Number(hg), a=Number(ag), source='API tahmini';
+  if(!Number.isFinite(h)||!Number.isFinite(a)){
+    const hf=form?.home?.avgFor, hc=form?.home?.avgAgainst, af=form?.away?.avgFor, ac=form?.away?.avgAgainst;
+    if([hf,hc,af,ac].every(Number.isFinite)){
+      h=Math.max(.15,Math.min(3.5,(hf+ac)/2));
+      a=Math.max(.15,Math.min(3.5,(af+hc)/2));
+      source='Son 5 maçtan türetilen model';
+    } else return {over:null,under:null,bttsYes:null,bttsNo:null,hg:null,ag:null,total:null,source:'Yeterli veri yok'};
+  }
+  let pUnder=0;
+  for(let i=0;i<=2;i++) for(let j=0;j<=2-i;j++) pUnder+=poissonPmf(i,h)*poissonPmf(j,a);
+  const under=Math.max(0,Math.min(1,pUnder)), over=1-under;
+  const homeNo=poissonPmf(0,h), awayNo=poissonPmf(0,a);
+  const bttsNo=Math.max(0,Math.min(1,homeNo+awayNo-homeNo*awayNo));
+  return {over,under,bttsYes:1-bttsNo,bttsNo,hg:h,ag:a,total:h+a,source};
+}
+function findMarketOdds(data){
+  let out={home:null,draw:null,away:null,over25:null,under25:null,bttsYes:null,bttsNo:null};
+  const books=data?.response||[];
+  for(const b of books){
+    for(const bet of (b.bookmakers||[])) for(const m of (bet.bets||[])){
+      const n=(m.name||'').toLowerCase();
+      for(const v of (m.values||[])){
+        const val=(v.value||'').toLowerCase(), o=Number(v.odd);
+        if(!Number.isFinite(o))continue;
+        if(n.includes('match winner')||n==='1x2'){if(val==='home')out.home??=o;else if(val==='draw')out.draw??=o;else if(val==='away')out.away??=o;}
+        if(n.includes('over/under')){if(val==='over 2.5')out.over25??=o;else if(val==='under 2.5')out.under25??=o;}
+        if(n.includes('both teams')||n.includes('btts')){if(val==='yes')out.bttsYes??=o;else if(val==='no')out.bttsNo??=o;}
+      }
+    }
+  }
+  return out;
+}
+function fixtureStats(arr,teamId){
+  const fs=(arr||[]).filter(x=>x?.fixture?.status?.short==='FT'||x?.fixture?.status?.short==='AET'||x?.fixture?.status?.short==='PEN').slice(0,5);
+  let w=0,d=0,l=0,gf=0,ga=0,over=0,btts=0;
+  const results=[];
+  for(const f of fs){
+    const home=Number(f.goals?.home), away=Number(f.goals?.away); if(!Number.isFinite(home)||!Number.isFinite(away))continue;
+    const isHome=f.teams?.home?.id===teamId; const scored=isHome?home:away, conceded=isHome?away:home; gf+=scored;ga+=conceded;
+    const r=scored>conceded?'W':scored===conceded?'D':'L'; if(r==='W')w++;else if(r==='D')d++;else l++;
+    if(home+away>2)over++; if(home>0&&away>0)btts++; results.push(r);
+  }
+  const n=results.length;
+  return {matches:n,w,d,l,gf,ga,avgFor:n?gf/n:null,avgAgainst:n?ga/n:null,overRate:n?over/n:null,bttsRate:n?btts/n:null,results};
+}
+function formLabel(s){return `${s.w}G ${s.d}B ${s.l}M`}
+function pctOrDash(v){return v==null?'—':pct(v)}
+function formCard(teamName,stats,side){
+  const results=stats?.results||[];
+  return `<div class="form-card"><div class="row between"><b>${esc(teamName)}</b><span class="small muted">son ${stats?.matches||0}</span></div><div class="result-row">${results.length?results.map(r=>`<span class="result ${r==='W'?'w':r==='D'?'d':'l'}">${r}</span>`).join(''):'<span class="muted small">Sonuç verisi yok</span>'}</div><div class="small muted">${stats?formLabel(stats):'—'}</div><div class="mini-grid" style="margin-top:8px"><div class="mini-stat"><span>Gol ort.</span><b>${stats?.avgFor!=null?stats.avgFor.toFixed(2):'—'}</b></div><div class="mini-stat"><span>Yenen ort.</span><b>${stats?.avgAgainst!=null?stats.avgAgainst.toFixed(2):'—'}</b></div><div class="mini-stat"><span>Üst 2.5</span><b>${pctOrDash(stats?.overRate)}</b></div><div class="mini-stat"><span>KG Var</span><b>${pctOrDash(stats?.bttsRate)}</b></div></div></div>`;
+}
+function marketRow(label,prob,marketOdd){
+  const e=edge(prob,marketOdd), cls=edgeClass(e);
+  return `<div class="marketrow"><div class="market-main"><div><div class="market-name">${esc(label)}</div><div class="market-details"><span>Model: <b>${prob!=null?pct(prob):'—'}</b></span><span>Adil: <b>${fair(prob)}</b></span><span>Piyasa: <b>${marketOdd??'—'}</b></span></div></div><div class="market-prob">${prob!=null?pct(prob):'—'}</div></div><div class="${cls} edge-pill">${e==='—'?'Piyasa oranı yok':'Fark: '+e}</div></div>`;
+}
+function modelSummary(advice,probs,gm,form){
+  const max=Math.max(...probs.filter(x=>x!=null));
+  const pick=max===probs[0]?'MS 1':max===probs[1]?'X':max===probs[2]?'MS 2':'—';
+  const parts=[]; if(pick!=='—')parts.push(`1X2 modelinde ${pick} en yüksek olasılığa sahip (${pct(max)}).`); if(gm?.total!=null)parts.push(`Tahmini toplam gol ${gm.total.toFixed(1)}.`); if(form?.home?.matches&&form?.away?.matches)parts.push(`Son 5 maç formu da ayrıca gösteriliyor.`); return parts.join(' ')||String(advice||'Model özeti için yeterli veri yok.');
+}
 
 window.openMatch=async function(id){
   $('#detail').classList.remove('hidden'); $('#tab-matches').classList.add('hidden'); $('#tab-search').classList.add('hidden'); $('#tab-coupon').classList.add('hidden'); $$('.tab').forEach(b=>b.classList.remove('active'));
-  $('#detail').innerHTML='<div class="card loader">Maçın detayları hazırlanıyor…</div>';
-  window.scrollTo({top:0,behavior:'smooth'});
+  $('#detail').innerHTML='<div class="card loader">Maçın detayları hazırlanıyor…</div>'; window.scrollTo({top:0,behavior:'smooth'});
   try{
     const f=fixtures.find(x=>x.fixture.id===id)||{};
-    const [pred,odds,h2h,inj,lineups,stats]=await Promise.allSettled([
-      api('predictions',{fixture:id}),api('odds',{fixture:id}),api('headtohead',{h2h:`${f.teams.home.id}-${f.teams.away.id}`,last:5}),api('injuries',{fixture:id}),api('lineups',{fixture:id}),api('statistics',{fixture:id})
+    const homeId=f.teams?.home?.id, awayId=f.teams?.away?.id;
+    const results=await Promise.allSettled([
+      api('predictions',{fixture:id}),api('odds',{fixture:id}),api('headtohead',{h2h:`${homeId}-${awayId}`,last:5}),api('injuries',{fixture:id}),api('lineups',{fixture:id}),api('statistics',{fixture:id}),
+      api('fixtures',{team:homeId,last:5}),api('fixtures',{team:awayId,last:5})
     ]);
+    const [pred,odds,h2h,inj,lineups,stats,homeRecent,awayRecent]=results;
     const P=pred.status==='fulfilled'?pickPrediction(pred.value):{}, O=odds.status==='fulfilled'?findMarketOdds(odds.value):{}, probs=probFromPrediction(P);
-    const hg=P.goals?.home, ag=P.goals?.away, advice=P.advice||P.winner?.name||'Model görüşü yok';
-    const confidence=probs.some(x=>x!==null)?Math.max(...probs):null;
-    const h2=(h2h.status==='fulfilled'?(h2h.value.response||[]):[]), injuries=inj.status==='fulfilled'?(inj.value.response||[]):[];
-    const ls=lineups.status==='fulfilled'?(lineups.value.response||[]):[];
-    const ss=stats.status==='fulfilled'?(stats.value.response||[]):[];
-    currentDetail={id,f,P,O,probs};
+    const homeForm=fixtureStats(homeRecent.status==='fulfilled'?homeRecent.value.response:[],homeId);
+    const awayForm=fixtureStats(awayRecent.status==='fulfilled'?awayRecent.value.response:[],awayId);
+    const form={home:homeForm,away:awayForm};
+    const GM=goalModel(P.goals?.home,P.goals?.away,form);
+    const advice=P.advice||P.winner?.name||'Model görüşü yok';
+    const h2=h2h.status==='fulfilled'?(h2h.value.response||[]):[], injuries=inj.status==='fulfilled'?(inj.value.response||[]):[], ls=lineups.status==='fulfilled'?(lineups.value.response||[]):[], ss=stats.status==='fulfilled'?(stats.value.response||[]):[];
+    const sources=[pred,odds,h2h,inj,lineups,stats,homeRecent,awayRecent];
+    const available=sources.filter(x=>x.status==='fulfilled').length;
+    const confidence=Math.round((available/8)*100);
     const picks=[['MS 1',probs[0],O.home],['X',probs[1],O.draw],['MS 2',probs[2],O.away]];
+    currentDetail={id,f,P,O,probs,form,GM};
     $('#detail').innerHTML=`
       <div class="card"><button class="btn secondary" onclick="backToMatches()">← Maçlara dön</button></div>
       <div class="card">
-        <div class="small muted">${esc(f.league?.name||'')} • ${fmtTime(f.fixture.date)}</div>
-        <div class="match" style="margin:15px 0">
-          <div class="team"><img class="logo" src="${esc(f.teams.home.logo)}"><div>${esc(f.teams.home.name)}</div></div>
-          <div class="center"><div class="big">${f.goals?.home??'—'}:${f.goals?.away??'—'}</div><div class="status">${esc(statusText(f.fixture.status.short))}</div></div>
-          <div class="team"><img class="logo" src="${esc(f.teams.away.logo)}"><div>${esc(f.teams.away.name)}</div></div>
-        </div>
-        <div class="notice"><b>Model notu:</b> ${esc(advice)}${hg!=null&&ag!=null?` • tahmini skor ${esc(hg)}-${esc(ag)}`:''}</div>
+        <div class="section-kicker">Maç özeti</div><div class="detail-title">${esc(f.teams?.home?.name||'Ev')} <span class="muted">vs</span> ${esc(f.teams?.away?.name||'Deplasman')}</div>
+        <div class="small muted" style="margin-top:4px">${esc(f.league?.name||'')} • ${fmtTime(f.fixture.date)} • ${esc(statusText(f.fixture.status.short))}</div>
+        <div class="match" style="margin:15px 0"><div class="team"><img class="logo" src="${esc(f.teams.home.logo)}"><div>${esc(f.teams.home.name)}</div></div><div class="center"><div class="big">${f.goals?.home??'—'}:${f.goals?.away??'—'}</div><div class="status">${esc(statusText(f.fixture.status.short))}</div></div><div class="team"><img class="logo" src="${esc(f.teams.away.logo)}"><div>${esc(f.teams.away.name)}</div></div></div>
+        <div class="summary-grid"><div class="summary-box"><div class="section-kicker">Model özeti</div><b>${esc(modelSummary(advice,probs,GM,form))}</b><div class="small muted" style="margin-top:7px">API notu: ${esc(advice)}</div></div><div class="summary-box"><div class="section-kicker">Tahmini skor</div><div class="summary-score">${GM.hg!=null?GM.hg.toFixed(1):'—'} - ${GM.ag!=null?GM.ag.toFixed(1):'—'}</div><div class="small muted">${esc(GM.source)}</div></div></div>
       </div>
-      <div class="card"><h3>1X2 model olasılıkları</h3><div class="prob">${picks.map((x,i)=>`<div><div class="muted small">${x[0]}</div><div class="big">${x[1]!=null?pct(x[1]):'—'}</div><div class="small">Adil oran: ${fair(x[1])}</div><div class="small">Piyasa: ${x[2]??'—'}</div><div class="${edge(x[1],x[2])!=='—'&&parseFloat(edge(x[1],x[2]))>0?'goodText':'muted'} small">Fark: ${edge(x[1],x[2])}</div><button class="btn good small" style="margin-top:7px" onclick="addPick('${esc(f.teams.home.name)}','${esc(f.teams.away.name)}','${x[0]}',${x[2]||1})">Kupona ekle</button></div>`).join('')}</div><div style="margin-top:10px" class="tag ${confidence&&confidence>.6?'good':'warn'}">Model güveni: ${confidence?pct(confidence):'—'}</div></div>
-      <div class="card"><h3>Gol piyasaları</h3><div class="grid2"><div class="statline"><span>Üst 2.5</span><b>${O.over25??'—'}</b></div><div class="statline"><span>Alt 2.5</span><b>${O.under25??'—'}</b></div><div class="statline"><span>KG Var</span><b>${O.bttsYes??'—'}</b></div><div class="statline"><span>KG Yok</span><b>${O.bttsNo??'—'}</b></div></div><div class="small muted" style="margin-top:8px">API modelinin gol tahmini: ${hg??'—'} - ${ag??'—'} • ${esc(P.under_over||'')}</div></div>
-      <div class="card"><h3>H2H — son ${h2.length}</h3>${h2.length?h2.map(x=>`<div class="statline"><span>${fmtTime(x.fixture.date)}<br><small class="muted">${esc(x.league?.name||'')}</small></span><b>${x.goals?.home??0} : ${x.goals?.away??0}</b></div>`).join(''):'<div class="muted small">H2H verisi yok.</div>'}</div>
-      <div class="card"><h3>Sakat / cezalı</h3>${injuries.length?injuries.slice(0,20).map(x=>`<div class="statline"><span>${esc(x.player?.name||'Oyuncu')}<br><small class="muted">${esc(x.type||'')} ${esc(x.reason||'')}</small></span><b>${esc(x.team?.name||'')}</b></div>`).join(''):'<div class="muted small">Bu maç için veri yok.</div>'}</div>
-      <div class="card"><h3>Muhtemel kadro</h3>${ls.length?ls.map(t=>`<div style="margin:8px 0"><b>${esc(t.team?.name||'')}</b><div>${(t.startXI||[]).slice(0,11).map(p=>`<span class="tag">${esc(p.player?.name||'')}</span>`).join('')}</div></div>`).join(''):'<div class="muted small">Kadro verisi henüz yayınlanmamış olabilir.</div>'}</div>
-      <div class="card"><h3>Maç istatistikleri</h3>${ss.length?ss.map(t=>`<div style="margin:8px 0"><b>${esc(t.team?.name||'')}</b>${(t.statistics||[]).slice(0,12).map(s=>`<div class="statline"><span>${esc(s.type||'')}</span><b>${esc(s.value??'—')}</b></div>`).join('')}</div>`).join(''):'<div class="muted small">Maç başlamadıysa istatistik gelmez.</div>'}</div>
+      <div class="card"><div class="section-kicker">1X2</div><h3>Model olasılıkları</h3><div class="prob">${picks.map(x=>{const e=edge(x[1],x[2]);return `<div class="prob-card"><div class="prob-label">${x[0]}</div><div class="prob-big">${x[1]!=null?pct(x[1]):'—'}</div><div class="meta-line">Adil oran: <b>${fair(x[1])}</b><br>Piyasa oranı: <b>${x[2]??'Yok'}</b></div><div class="${edgeClass(e)} edge-pill">${e==='—'?'Karşılaştırma yok':'Fark: '+e}</div><button class="btn good small" style="margin-top:9px;width:100%" onclick="addPick('${esc(f.teams.home.name)}','${esc(f.teams.away.name)}','${x[0]}',${x[2]||1})">Kupona ekle</button></div>`}).join('')}</div><div class="summary-box confidence" style="margin-top:10px"><div><b>Veri güveni</b><div class="small muted">Kullanılabilen veri kaynakları: ${available}/8</div><div class="bar"><i style="width:${confidence}%"></i></div></div><b>${confidence}%</b></div></div>
+      <div class="card"><div class="section-kicker">Form</div><h3>Son 5 maç</h3><div class="form-grid">${formCard(f.teams.home.name,homeForm,'home')}${formCard(f.teams.away.name,awayForm,'away')}</div><div class="notice" style="margin-top:10px">Form oranları yalnızca son 5 tamamlanmış maçtan hesaplanır; örneklem küçükse tek başına karar ölçütü değildir.</div></div>
+      <div class="card"><div class="section-kicker">Gol piyasaları</div><h3>2.5 gol ve karşılıklı gol</h3><div class="market-card">${marketRow('Üst 2.5',GM.over,O.over25)}${marketRow('Alt 2.5',GM.under,O.under25)}${marketRow('KG Var',GM.bttsYes,O.bttsYes)}${marketRow('KG Yok',GM.bttsNo,O.bttsNo)}</div><div class="notice market-note"><b>Model kaynağı:</b> ${esc(GM.source)}${P.under_over?` • API tahmini: ${esc(P.under_over)}`:''}. Piyasa oranı yoksa model olasılığı ve adil oran yine gösterilir.</div></div>
+      <div class="card"><h3>H2H — son ${h2.length}</h3>${h2.length?h2.map(x=>`<div class="statline"><span>${fmtTime(x.fixture.date)}<br><small class="muted">${esc(x.league?.name||'')}</small></span><b>${x.goals?.home??0} : ${x.goals?.away??0}</b></div>`).join(''):'<div class="empty-soft">H2H verisi yok.</div>'}</div>
+      <div class="card"><h3>Sakat / cezalı</h3>${injuries.length?injuries.slice(0,20).map(x=>`<div class="statline"><span>${esc(x.player?.name||'Oyuncu')}<br><small class="muted">${esc(x.type||'')} ${esc(x.reason||'')}</small></span><b>${esc(x.team?.name||'')}</b></div>`).join(''):'<div class="empty-soft">Bu maç için veri yok.</div>'}</div>
+      <div class="card"><h3>Muhtemel kadro</h3>${ls.length?ls.map(t=>`<div style="margin:8px 0"><b>${esc(t.team?.name||'')}</b><div>${(t.startXI||[]).slice(0,11).map(p=>`<span class="tag">${esc(p.player?.name||'')}</span>`).join('')}</div></div>`).join(''):'<div class="empty-soft">Kadro verisi henüz yayınlanmamış olabilir.</div>'}</div>
+      <div class="card"><h3>Maç istatistikleri</h3>${ss.length?ss.map(t=>`<div style="margin:8px 0"><b>${esc(t.team?.name||'')}</b>${(t.statistics||[]).slice(0,12).map(s=>`<div class="statline"><span>${esc(s.type||'')}</span><b>${esc(s.value??'—')}</b></div>`).join('')}</div>`).join(''):'<div class="empty-soft">Maç başlamadıysa istatistik gelmez.</div>'}
     `;
   }catch(e){$('#detail').innerHTML=`<div class="card dangerText">${esc(e.message)}</div>`}
 }
